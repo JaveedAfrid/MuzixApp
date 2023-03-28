@@ -1,0 +1,78 @@
+body {
+  background-color: rgb(19, 24, 43);
+}
+
+.navbar {
+  background-color: rgb(26, 32, 58)!important;
+}
+
+/* Hover Effet on Heart */
+
+.hearticon .bi-heart-fill:hover {
+  color: red!important;
+  transform: scale(1.5, 1.5)!important;
+}
+
+.hearticon .bi-heart-fill:active {
+  color: red!important;
+}
+
+.bi-heart-fill {
+  color: rgb(66, 66, 66)!important;
+  transition: transform 0.2s!important;
+}
+
+.background {
+  background-color: rgb(19, 24, 43);
+}
+
+.headBackground {
+  background-color: rgb(26, 32, 58)!important;
+}
+
+.fa-thumbs-up {
+  color: white;
+  transition: transform 0.2s!important;
+}
+
+.fa-thumbs-up:hover {
+  color: rgb(34, 137, 253);
+  transform: scale(1.5, 1.5)!important;
+}
+
+.fa-search {
+  margin-bottom: 0.3em;
+}
+
+html, body, .loginComp {
+  height: 100vh;
+  width: 100wh;
+}
+
+.loginComp {
+  background: url('./images/Login.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+.loginComp::before {
+  opacity: 0.8;
+}
+
+.loginComp h2 {
+  font-weight: bold;
+  color: rgb(230, 160, 160);
+}
+
+.loginComp input {
+  border-radius: 8px;
+  background: none;
+  color: grey;
+  border: 1.5px solid gray;
+}
+
+.loginComp #btnLogin, #btnRegister {
+  font-weight: 500;
+  border-radius: 8px;
+  color: white;
+  background-color: rgb(61, 154, 140);
+}

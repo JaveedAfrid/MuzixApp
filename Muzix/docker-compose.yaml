@@ -1,0 +1,93 @@
+version: "3.6"
+services:
+
+  discovery-service:
+    image: discovery-service:2.0
+    build: ./discovery-services
+    ports:
+      - 8761:8761
+    restart: on-failure
+    networks:
+      muzix-api-network:
+
+  api-gateway-service:
+    image: apigatewayservice:2.0
+    build: ./api-gateway-service
+    ports:
+      - 8765:8765
+    environment:
+      EUREKA_HOST: discovery-service
+    depends_on:
+      - discovery-service
+    networks:
+      muzix-api-network:
+
+  muzixlogin-service:
+    image: muzixlogin:2.0
+    build: ./MuzixLogin
+    ports:
+      - 8080:8080
+    environment:
+      MYSQL_HOST: mysqldb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: pass123
+      MYSQL_PORT: 3306
+      EUREKA_HOST: discovery-service
+    depends_on:
+      - mysqldb
+      - discovery-service
+    restart: on-failure
+    networks:
+      muzix-api-network:
+
+  recommendation-service:
+    image: recommendationservice:2.0
+    build: ./recommendationservice
+    ports:
+      - 5001:5001
+    environment:
+      MYSQL_HOST: mysqldb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: pass123
+      MYSQL_PORT: 3306
+      EUREKA_HOST: discovery-service
+    depends_on:
+      - mysqldb
+      - discovery-service
+    restart: on-failure
+    networks:
+      muzix-api-network:
+
+  favourites-service:
+    image: favouritesservice:2.0
+    build: ./favourites-services
+    ports:
+      - 8090:8090
+    environment:
+      MONGO_HOST: mongodb
+      EUREKA_HOST: discovery-service
+    depends_on:
+      - mongodb
+    networks:
+      muzix-api-network:
+
+  mysqldb:
+    image: mysql:8.0.24
+    ports:
+      - 3309:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: pass123
+      MYSQL_DATABASE: user_docker_db
+    networks:
+      muzix-api-network:
+
+  mongodb:
+    image: mongo:4.4.6
+    restart: on-failure
+    ports:
+      - 27017:27017
+    networks:
+      muzix-api-network:
+
+networks:
+  muzix-api-network:

@@ -1,0 +1,25 @@
+image: maven:3.8-openjdk-11
+
+stages:
+  - test
+  - build
+
+cache:
+  key: maven3
+  paths:
+    - .m2/repository
+
+maven-test:
+  stage: test
+  script: "mvn clean test"
+  tags:
+    - docker-executer
+
+maven-package:
+  stage: build
+  script: "mvn package -DskipTests"
+  artifacts:
+    paths:
+      - .target/*.jar
+  tags:
+    - docker-executer
